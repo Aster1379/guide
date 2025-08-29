@@ -3,33 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幽灵倒计时系统</title>
+    <title>Aster'Site|博客，科幻，古灵精怪</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- 更新为更具科技感的字体组合 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cyberpunk+Is+Not+Dead&family=Exo+2:wght@300;400;600;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Exo 2', 'Arial', sans-serif;
+            /* 正文默认科技感字体 */
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
         }
         
         body {
-            background: #0a0a0a; /* 深灰黑背景，替代纯黑更有层次 */
-            color: #e0e0e0; /* 浅灰文本，提升可读性 */
+            background: #0a0a0a;
+            color: #e0e0e0;
             overflow: hidden;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            /* 优化背景渐变：黑白灰基底+深蓝点缀，更内敛 */
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(20, 30, 50, 0.1) 0%, transparent 25%),
                 radial-gradient(circle at 80% 70%, rgba(30, 40, 70, 0.1) 0%, transparent 25%);
         }
         
-        /* 550W启动动画 - 配色优化 */
+        /* 550W启动动画 */
         #init-screen {
             position: absolute;
             top: 0;
@@ -40,7 +42,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: #0a0a0a; /* 与页面背景统一 */
+            background: #0a0a0a;
             z-index: 100;
             padding: 20px;
             overflow: auto;
@@ -49,10 +51,10 @@
         .init-container {
             width: 100%;
             max-width: 800px;
-            background: #121212; /* 卡片式深灰背景，增强层次 */
+            background: #121212;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* 暗阴影提升立体感 */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
         
         .init-header {
@@ -60,14 +62,16 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
-            border-bottom: 1px solid #282828; /* 浅灰边框，替代深色 */
+            border-bottom: 1px solid #282828;
             padding-bottom: 15px;
         }
         
         .init-title {
+            /* 标题科技感字体 */
+            font-family: 'Exo 2', sans-serif;
             font-size: 1.1rem;
             letter-spacing: 2px;
-            color: #a0a0a0; /* 中灰文本，降低饱和度 */
+            color: #a0a0a0;
             text-transform: uppercase;
         }
         
@@ -80,14 +84,15 @@
             max-width: 400px;
             width: 80%;
             height: auto;
-            /* 取消蓝色阴影，改为中性灰阴影，适配黑白图片 */
             filter: drop-shadow(0 0 15px rgba(200, 200, 200, 0.2));
-            background: transparent; /* 强制取消图片背景 */
+            background: transparent;
         }
         
         .init-subtitle {
+            /* 副标题科技感字体 */
+            font-family: 'Exo 2', sans-serif;
             text-align: center;
-            color: #888; /* 深灰文本，增强科技感 */
+            color: #888;
             letter-spacing: 3px;
             margin-bottom: 30px;
             font-size: 1rem;
@@ -95,16 +100,17 @@
         }
         
         .terminal-output {
-            background: #0f0f0f; /* 终端深黑背景 */
-            border: 1px solid #222; /* 浅灰边框 */
+            /* 终端专用字体 */
+            font-family: 'Roboto Mono', monospace;
+            background: #0f0f0f;
+            border: 1px solid #222;
             border-radius: 4px;
             padding: 20px;
             min-height: 300px;
             max-height: 50vh;
-            font-family: 'Consolas', monospace;
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.6;
-            color: #d0d0d0; /* 浅灰文本，提升终端可读性 */
+            color: #d0d0d0;
             overflow: auto;
             position: relative;
         }
@@ -117,7 +123,7 @@
         }
         
         .prompt {
-            color: #3a7bd5; /* 低饱和深蓝，替代亮蓝 */
+            color: #3a7bd5;
             margin-right: 10px;
         }
         
@@ -125,7 +131,7 @@
             display: inline-block;
             width: 8px;
             height: 18px;
-            background: #d0d0d0; /* 浅灰光标，适配整体配色 */
+            background: #d0d0d0;
             margin-left: 4px;
             animation: blink 1s infinite;
             vertical-align: middle;
@@ -134,17 +140,17 @@
         .progress-container {
             margin-top: 30px;
             width: 100%;
-            background: #1a1a1a; /* 深灰进度条背景 */
+            background: #1a1a1a;
             height: 6px;
             border-radius: 3px;
             overflow: hidden;
-            border: 1px solid #282828; /* 浅灰边框 */
+            border: 1px solid #282828;
         }
         
         .progress-bar {
             height: 100%;
             width: 0;
-            background: #3a7bd5; /* 深蓝进度条，主强调色 */
+            background: #3a7bd5;
             transition: width 0.5s ease;
         }
         
@@ -152,11 +158,11 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-            color: #888; /* 深灰状态文本 */
-            font-size: 0.9rem;
+            color: #888;
+            font-size: 0.85rem;
         }
         
-        /* 主引导界面 - 配色与质感优化 */
+        /* 主引导界面 */
         .container {
             width: 90%;
             max-width: 800px;
@@ -168,18 +174,19 @@
         }
         
         .countdown {
-            font-size: 4.5rem;
-            font-weight: 900;
-            color: rgba(240, 240, 240, 0.95); /* 近白文本，提升视觉焦点 */
+            /* 倒计时科技感字体 */
+            font-family: 'Exo 2', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(240, 240, 240, 0.95);
             margin-bottom: 2rem;
-            letter-spacing: 0.5rem;
+            letter-spacing: 0.3rem;
             position: relative;
-            font-family: 'Orbitron', sans-serif;
-            padding: 20px;
-            background: rgba(15, 20, 30, 0.4); /* 半透深灰背景，增强层次 */
+            padding: 15px;
+            background: rgba(15, 20, 30, 0.4);
             border-radius: 12px;
-            border: 1px solid rgba(58, 123, 213, 0.2); /* 深蓝细边框，点缀 */
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); /* 暗阴影，更显高级 */
+            border: 1px solid rgba(58, 123, 213, 0.2);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
             animation: ghostFloat 3s infinite ease-in-out;
         }
         
@@ -190,19 +197,19 @@
             left: 50%;
             transform: translateX(-50%);
             width: 300px;
-            height: 2px; /* 减薄下划线，更现代 */
-            background: linear-gradient(90deg, transparent, #3a7bd5, transparent); /* 深蓝渐变 */
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3a7bd5, transparent);
         }
         
         .terminal {
-            background: #121212; /* 深灰终端背景 */
-            border: 1px solid rgba(58, 123, 213, 0.3); /* 深蓝边框，低透明度 */
+            background: #121212;
+            border: 1px solid rgba(58, 123, 213, 0.3);
             border-radius: 8px;
             padding: 2rem;
             margin: 2rem auto;
             max-width: 600px;
             position: relative;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4); /* 暗阴影增强立体感 */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
         }
         
         .terminal::before {
@@ -212,7 +219,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 优化网格纹理：浅灰低透明度，更内敛 */
             background: linear-gradient(135deg, transparent 50%, rgba(58, 123, 213, 0.03) 50%);
             background-size: 12px 12px;
             z-index: -1;
@@ -220,61 +226,104 @@
         }
         
         .terminal-header {
+            /* 终端标题科技感字体 */
+            font-family: 'Exo 2', sans-serif;
             display: flex;
             justify-content: space-between;
             margin-bottom: 1.5rem;
-            color: #3a7bd5; /* 深蓝标题，主强调色 */
+            color: #3a7bd5;
             font-size: 1.1rem;
-            border-bottom: 1px solid rgba(58, 123, 213, 0.2); /* 深蓝细边框 */
+            border-bottom: 1px solid rgba(58, 123, 213, 0.2);
             padding-bottom: 10px;
-            font-family: 'Orbitron', sans-serif;
         }
         
+        /* 输入框区域 - 红色圆形提交按钮 */
         .prompt-input {
             display: flex;
             align-items: center;
             margin-top: 1.5rem;
             justify-content: center;
+            gap: 10px; /* 输入框与按钮间距 */
         }
         
         .prompt-text {
-            margin-right: 10px;
-            color: #60a060; /* 低饱和绿色，替代亮绿，更协调 */
-            font-weight: bold;
+            margin-right: 5px;
+            color: #60a060;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         
         .command-input {
-            background: rgba(15, 20, 30, 0.7); /* 深灰输入框背景 */
-            border: 1px solid #3a7bd5; /* 深蓝边框 */
-            color: #60a060; /* 低饱和绿色文本 */
-            font-size: 1.1rem;
+            /* 输入框科技感字体 */
+            font-family: 'Roboto Mono', monospace;
+            background: rgba(15, 20, 30, 0.7);
+            border: 1px solid #3a7bd5;
+            color: #60a060;
+            font-size: 1rem;
             padding: 8px 15px;
-            width: 70%;
+            width: 65%; /* 调整宽度，给按钮留空间 */
             outline: none;
-            caret-color: #60a060; /* 光标颜色匹配文本 */
+            caret-color: #60a060;
             transition: all 0.3s;
             border-radius: 4px;
             letter-spacing: 1px;
-            font-family: 'Orbitron', sans-serif;
         }
         
         .command-input:focus {
-            border: 1px solid #60a060; /* 聚焦时变绿色边框，增强反馈 */
-            box-shadow: 0 0 15px rgba(96, 160, 96, 0.2); /* 绿色淡阴影，不刺眼 */
+            border: 1px solid #60a060;
+            box-shadow: 0 0 15px rgba(96, 160, 96, 0.2);
+        }
+        
+        /* 红色圆形提交按钮 - 精致科技风 */
+        .submit-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%; /* 圆形 */
+            background: linear-gradient(145deg, #ff4757, #e03140); /* 红色渐变增强质感 */
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 8px rgba(255, 71, 87, 0.3), /* 外发光阴影 */
+                        inset 0 2px 3px rgba(255, 255, 255, 0.15); /* 内高光 */
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.08); /* hover放大效果 */
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.45),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.2);
+        }
+        
+        .submit-btn:active {
+            transform: scale(0.98); /* 点击缩小反馈 */
+            box-shadow: 0 2px 5px rgba(255, 71, 87, 0.3),
+                        inset 0 2px 3px rgba(0, 0, 0, 0.2);
         }
         
         .hint {
             margin-top: 1.5rem;
-            color: #a0a0a0; /* 中灰提示文本 */
-            font-size: 0.9rem;
+            color: #a0a0a0;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
         
+        .hint span {
+            /* 提示中的关键词/警告科技感字体 */
+            font-family: 'Roboto Mono', monospace;
+        }
+        
         .skip-btn {
+            /* 跳过按钮科技感字体 */
+            font-family: 'Exo 2', sans-serif;
             margin-top: 2rem;
             background: transparent;
-            border: 1px solid #3a7bd5; /* 深蓝边框 */
-            color: #3a7bd5; /* 深蓝文本 */
+            border: 1px solid #3a7bd5;
+            color: #3a7bd5;
             padding: 10px 30px;
             border-radius: 30px;
             font-size: 1rem;
@@ -283,13 +332,12 @@
             outline: none;
             position: relative;
             overflow: hidden;
-            font-family: 'Orbitron', sans-serif;
             letter-spacing: 1px;
         }
         
         .skip-btn:hover {
-            background: rgba(58, 123, 213, 0.1); /* hover时深蓝淡背景 */
-            box-shadow: 0 0 20px rgba(58, 123, 213, 0.3); /* 深蓝淡阴影 */
+            background: rgba(58, 123, 213, 0.1);
+            box-shadow: 0 0 20px rgba(58, 123, 213, 0.3);
         }
         
         .skip-btn::after {
@@ -299,7 +347,7 @@
             left: -60%;
             width: 20px;
             height: 200%;
-            background: rgba(255, 255, 255, 0.15); /* 淡白高光，更柔和 */
+            background: rgba(255, 255, 255, 0.15);
             transform: rotate(25deg);
             transition: all 0.6s;
         }
@@ -308,7 +356,7 @@
             left: 120%;
         }
         
-        /* 动画效果保持不变 */
+        /* 动画效果 */
         @keyframes fadeInUp {
             to {
                 opacity: 1;
@@ -330,11 +378,11 @@
         @keyframes ghostFloat {
             0%, 100% { 
                 transform: translateY(0) rotate(0deg);
-                text-shadow: 0 0 15px rgba(240, 240, 240, 0.3); /* 浅灰阴影 */
+                text-shadow: 0 0 15px rgba(240, 240, 240, 0.3);
             }
             25% { 
                 transform: translateY(-5px) rotate(-0.5deg);
-                text-shadow: 0 0 20px rgba(58, 123, 213, 0.4); /* 深蓝阴影 */
+                text-shadow: 0 0 20px rgba(58, 123, 213, 0.4);
             }
             50% { 
                 transform: translateY(0) rotate(0deg);
@@ -360,13 +408,11 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            /* 粒子颜色改为黑白灰+深蓝渐变 */
             background: linear-gradient(180deg, #d0d0d0, #3a7bd5);
             border-radius: 50%;
             animation: float 8s infinite ease-in-out;
         }
         
-        /* 悬浮语录样式 - 配色优化 */
         .floating-texts {
             position: absolute;
             top: 0;
@@ -378,22 +424,19 @@
         }
         
         .quote {
+            /* 悬浮语录科技感字体 */
+            font-family: 'Exo 2', sans-serif;
             position: absolute;
             font-size: 1.3rem;
-            color: rgba(240, 240, 240, 0.8); /* 近白文本 */
+            color: rgba(240, 240, 240, 0.8);
             opacity: 0;
             max-width: 300px;
             text-align: center;
             padding: 15px;
             line-height: 1.6;
-            font-family: 'Georgia', serif;
             font-style: italic;
             animation: floatText linear forwards;
-            text-shadow: 0 0 10px rgba(58, 123, 213, 0.3); /* 深蓝淡阴影 */
-            border-radius: 10px;
-            background: rgba(15, 20, 30, 0.3); /* 半透深灰背景 */
-            backdrop-filter: blur(3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* 暗阴影增强层次 */
+            text-shadow: 0 0 1
         }
         
         @keyframes floatText {
@@ -467,11 +510,10 @@
         <div class="init-container">
             <div class="init-header">
                 <div class="init-title">量子智能核心系统</div>
-                <div class="init-title">版本 7.2.0</div>
+                <div class="init-title">版本7.2.0</div>
             </div>
             
             <div class="init-logo">
-                <!-- 图片背景已通过CSS强制透明，建议使用本身无背景的黑白版图片 -->
                 <img src="https://s21.ax1x.com/2025/08/02/pVNgee0.jpg" alt="550W Quantum Intelligence Core">
             </div>
             <div class="init-subtitle">QUANTUM INTELLIGENCE CORE</div>
@@ -497,20 +539,21 @@
         
         <div class="terminal">
             <div class="terminal-header">
-                <div><i class="fas fa-terminal"></i> 幽灵倒计时系统</div>
-                <div>三体协议 1.0</div>
+                <div><i class="fas fa-terminal"></i> 以下为我的个人网站引导页面</div>
+                <div>幽灵倒计时</div>
             </div>
-            <div>警告：检测到幽灵倒计时！</div>
             <div class="hint">
-                这是来自宇宙深处的警告信号<br>
-                <span style="color: #ff6b6b; font-size: 0.9rem; font-family: 'Orbitron', sans-serif;">倒计时将在120秒后归零，倒计时结束将引发未知后果</span><br><br>
-                输入关键词尝试解除倒计时：<br>
-                <span style="color: #60a060; font-size: 0.9rem; font-family: 'Orbitron', sans-serif;">可用指令: "二向箔", "黄金之心", "42", "水滴", "归零者"</span>
+                <span style="color: #ff6b6b; font-size: 0.9rem; font-family: 'Exo 2', sans-serif;">警告：倒计时将在120秒后归零，倒计时结束不会引发任何后果</span><br><br>
+                请输入关键词并点击按钮，将跳转到对应页面:<br>
+                <span style="color: #60a060; font-size: 0.9rem; font-family: 'Exo 2', sans-serif;"> "二向箔", "黄金之心", "42","水滴", "归零者", "递归"</span>
             </div>
             
             <div class="prompt-input">
                 <span class="prompt-text">></span>
                 <input type="text" class="command-input" id="command-input" placeholder="输入解除指令...">
+                <button class="submit-btn" id="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
                 <div class="cursor"></div>
             </div>
         </div>
@@ -521,7 +564,7 @@
     </div>
     
     <script>
-        // 550W启动日志（功能不变）
+        // 550W启动日志
         const initLogs = [
             {text: "> 启动量子计算核心...", delay: 500},
             {text: "> 加载系统内核...", delay: 800},
@@ -542,7 +585,7 @@
             {text: "> 系统状态：全功能就绪", delay: 700},
         ];
         
-        // 科幻语录库（功能不变）
+        // 科幻语录库
         const quotes = [
             "不要回答！不要回答！不要回答！",
             "给岁月以文明，而不是给文明以岁月",
@@ -552,6 +595,7 @@
             "Send cerebrum only",
             "美好人生的关键在于你能迷上什么东西",
             "没关系的，都一样",
+			"我思故我在",
             "自然选择，前进四！",
             "主不在乎",
             "前进！前进！不择手段地前进！",
@@ -571,17 +615,17 @@
             "唯一不可阻挡的是时间，它像一把利刃，无声地切开了坚硬和柔软的一切"
         ];
         
-        // 关键词映射（功能不变）
+        // 关键词映射 - 使用绝对路径
         const keywordMap = {
-            "二向箔": "blog.aster1379.xin",
-            "黄金之心": "workspace.aster1379.xin",
-            "42": "3body.aster1379.xin",
-            "水滴": "about-me.aster1379.xin",
-            "归零者": "virus.aster1379.xin",
-            "递归": "guide.aster1379.xin",
+            "二向箔": "https://blog.aster1379.xin",
+            "黄金之心": "https://workspace.aster1379.xin",
+            "42": "https://3body.aster1379.xin",
+            "水滴": "https://about-me.aster1379.xin",
+            "归零者": "https://virus.aster1379.xin",
+            "递归": "https://guide.aster1379.xin",
         };
         
-        // 初始化550W启动动画（功能逻辑完全不变）
+        // 初始化550W启动动画
         document.addEventListener('DOMContentLoaded', () => {
             const initScreen = document.getElementById('init-screen');
             const terminalOutput = document.getElementById('terminal-output');
@@ -593,6 +637,7 @@
             const commandInput = document.getElementById('command-input');
             const skipBtn = document.getElementById('skip-btn');
             const floatingTexts = document.getElementById('floating-texts');
+            const submitBtn = document.getElementById('submit-btn'); // 获取提交按钮
             
             let progress = 0;
             let currentLog = 0;
@@ -705,7 +750,7 @@
                 }, 1500);
             }
             
-            // 幽灵倒计时 - 优化版本（功能不变）
+            // 幽灵倒计时
             function startGhostCountdown() {
                 // 总倒计时秒数（120秒）
                 const totalSeconds = 120;
@@ -768,31 +813,29 @@
                 window.countdownInterval = countdownInterval;
             }
             
-            // 关键词输入（功能不变）
-            commandInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const command = commandInput.value.trim().toLowerCase();
+            // 点击红色按钮提交关键词（替换回车提交）
+            submitBtn.addEventListener('click', () => {
+                const command = commandInput.value.trim().toLowerCase();
+                
+                if (command in keywordMap) {
+                    // 清除倒计时
+                    clearInterval(window.countdownInterval);
                     
-                    if (command in keywordMap) {
-                        // 清除倒计时
-                        clearInterval(window.countdownInterval);
-                        
-                        // 模拟输入效果
-                        commandInput.value = "执行指令：" + command;
-                        setTimeout(() => {
-                            window.location.href = keywordMap[command];
-                        }, 1000);
-                    } else {
-                        // 无效指令效果
-                        commandInput.value = "指令无效";
-                        setTimeout(() => {
-                            commandInput.value = "";
-                        }, 1000);
-                    }
+                    // 模拟输入效果
+                    commandInput.value = "执行指令：" + command;
+                    setTimeout(() => {
+                        window.location.href = keywordMap[command];
+                    }, 1000);
+                } else {
+                    // 无效指令效果
+                    commandInput.value = "指令无效";
+                    setTimeout(() => {
+                        commandInput.value = "";
+                    }, 1000);
                 }
             });
             
-            // 跳过按钮（功能不变）
+            // 跳过按钮
             skipBtn.addEventListener('click', () => {
                 // 清除倒计时
                 clearInterval(window.countdownInterval);
