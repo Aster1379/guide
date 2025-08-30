@@ -1,0 +1,475 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1rem;
+}
+
+body {
+    background: #0a0a0a;
+    color: #e0e0e0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(20, 30, 50, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(30, 40, 70, 0.1) 0%, transparent 25%);
+}
+
+/* 550W启动动画 */
+#init-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0a0a0a;
+    z-index: 100;
+    padding: 20px;
+    overflow: auto;
+}
+
+.init-container {
+    width: 100%;
+    max-width: 800px;
+    background: #121212;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.init-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #282828;
+    padding-bottom: 15px;
+}
+
+.init-title {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #a0a0a0;
+    text-transform: uppercase;
+}
+
+.init-logo {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.init-logo img {
+    max-width: 400px;
+    width: 80%;
+    height: auto;
+    filter: drop-shadow(0 0 15px rgba(200, 200, 200, 0.2));
+    background: transparent;
+}
+
+.init-subtitle {
+    font-family: 'Exo 2', sans-serif;
+    text-align: center;
+    color: #888;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.terminal-output {
+    font-family: 'Roboto Mono', monospace;
+    background: #0f0f0f;
+    border: 1px solid #222;
+    border-radius: 4px;
+    padding: 20px;
+    min-height: 300px;
+    max-height: 50vh;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #d0d0d0;
+    overflow: auto;
+    position: relative;
+}
+
+.terminal-line {
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s forwards;
+}
+
+.prompt {
+    color: #3a7bd5;
+    margin-right: 10px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 18px;
+    background: #d0d0d0;
+    margin-left: 4px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+.progress-container {
+    margin-top: 30px;
+    width: 100%;
+    background: #1a1a1a;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid #282828;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background: #3a7bd5;
+    transition: width 0.5s ease;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* 主引导界面 */
+.container {
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease;
+}
+
+/* 倒计时样式优化 - 保持原设计风格 */
+.countdown {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 4.2rem;
+    font-weight: 800;
+    color: rgba(250, 250, 250, 0.98); /* 提高透明度 */
+    margin-bottom: 2rem;
+    letter-spacing: 0.35rem;
+    position: relative;
+    padding: 18px;
+    background: rgba(15, 20, 30, 0.45);
+    border-radius: 12px;
+    border: 1px solid rgba(70, 110, 180, 0.25);
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.35);
+    animation: subtleFlicker 4s infinite ease-in-out;
+    text-shadow: 
+        0 0 12px rgba(220, 230, 255, 0.7),
+        0 0 25px rgba(150, 180, 255, 0.4);
+}
+
+.countdown::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(90, 140, 220, 0.7), transparent);
+}
+
+/* 微妙的闪烁效果替代抖动 */
+@keyframes subtleFlicker {
+    0%, 100% { 
+        opacity: 0.98;
+        text-shadow: 
+            0 0 12px rgba(220, 230, 255, 0.7),
+            0 0 25px rgba(150, 180, 255, 0.4);
+    }
+    50% { 
+        opacity: 0.88;
+        text-shadow: 
+            0 0 18px rgba(220, 230, 255, 0.8),
+            0 0 30px rgba(150, 180, 255, 0.5);
+    }
+    75% {
+        opacity: 0.94;
+        text-shadow: 
+            0 0 10px rgba(220, 230, 255, 0.6),
+            0 0 20px rgba(150, 180, 255, 0.3);
+    }
+}
+
+.terminal {
+    background: #121212;
+    border: 1px solid rgba(58, 123, 213, 0.3);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.terminal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 50%, rgba(58, 123, 213, 0.03) 50%);
+    background-size: 12px 12px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.terminal-header {
+    font-family: 'Exo 2', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    color: #3a7bd5;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(58, 123, 213, 0.2);
+    padding-bottom: 10px;
+}
+
+.hint {
+    margin-top: 1.5rem;
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.hint-text {
+    color: #888;
+    font-size: 0.9rem;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.keyword-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.keyword-link {
+    color: #60a060;
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 1px solid rgba(96, 160, 96, 0.3);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.keyword-link:hover {
+    background: rgba(96, 160, 96, 0.1);
+    box-shadow: 0 0 15px rgba(96, 160, 96, 0.2);
+    transform: translateY(-2px);
+}
+
+.skip-btn {
+    font-family: 'Exo 2', sans-serif;
+    margin-top: 2rem;
+    background: transparent;
+    border: 1px solid #3a7bd5;
+    color: #3a7bd5;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+}
+
+.skip-btn:hover {
+    background: rgba(58, 123, 213, 0.1);
+    box-shadow: 0 0 20px rgba(58, 123, 213, 0.3);
+}
+
+.skip-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20px;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: rotate(25deg);
+    transition: all 0.6s;
+}
+
+.skip-btn:hover::after {
+    left: 120%;
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(180deg, #d0d0d0, #3a7bd5);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+}
+
+.floating-texts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.quote {
+    font-family: 'Exo 2', sans-serif;
+    position: absolute;
+    font-size: 1.3rem;
+    color: rgba(240, 240, 240, 0.8);
+    opacity: 0;
+    max-width: 300px;
+    text-align: center;
+    padding: 15px;
+    line-height: 1.6;
+    font-style: italic;
+    animation: floatText linear forwards;
+    text-shadow: 0 0 10px rgba(240, 240, 240, 0.3);
+}
+
+@keyframes floatText {
+    0% { 
+        opacity: 0;
+        transform: translateY(0) rotate(0deg);
+    }
+    10% {
+        opacity: 0.95;
+    }
+    90% {
+        opacity: 0.95;
+    }
+    100% { 
+        opacity: 0;
+        transform: translateY(-100px) rotate(5deg);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .init-logo img {
+        max-width: 280px;
+    }
+    
+    .countdown {
+        font-size: 3rem;
+        letter-spacing: 0.3rem;
+        padding: 15px;
+    }
+    
+    .countdown::after {
+        width: 250px;
+    }
+    
+    .terminal {
+        padding: 1.5rem;
+    }
+    
+    .keyword-links {
+        gap: 8px;
+    }
+    
+    .keyword-link {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown {
+        font-size: 2.4rem;
+        letter-spacing: 0.2rem;
+        padding: 12px;
+    }
+    
+    .countdown::after {
+        width: 200px;
+    }
+}
+
+/* 倒计时结束状态样式 */
+.countdown-ending {
+    animation: endingPulse 1s infinite !important;
+    color: rgba(255, 150, 150, 0.95) !important;
+}
+
+@keyframes endingPulse {
+    0%, 100% { 
+        opacity: 0.95;
+        text-shadow: 
+            0 0 15px rgba(255, 170, 170, 0.7),
+            0 0 30px rgba(255, 130, 130, 0.5);
+    }
+    50% { 
+        opacity: 0.82;
+        text-shadow: 
+            0 0 20px rgba(255, 190, 190, 0.8),
+            0 0 35px rgba(255, 150, 150, 0.6);
+    }
+}
+
+.countdown-complete {
+    color: rgba(255, 130, 130, 0.95) !important;
+    text-shadow: 
+        0 0 20px rgba(255, 150, 150, 0.7),
+        0 0 40px rgba(255, 110, 110, 0.5) !important;
+    animation: none !important;
+}
