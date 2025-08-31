@@ -14,6 +14,16 @@
     <!-- 悬浮语录容器 -->
     <div class="floating-texts" id="floating-texts"></div>
     
+    <!-- 递归提示模态框 -->
+    <div id="recursive-modal" class="modal">
+        <div class="modal-content">
+            <h2>恭喜您解锁：递归</h2>
+            <p>您通过递归链接返回到引导页面，触发了系统的自反机制。</p>
+            <p>550W量子智能核心将重新启动，探索无限递归的可能性。</p>
+            <button id="modal-confirm">确认并继续</button>
+        </div>
+    </div>
+    
     <!-- 550W启动画面 -->
     <div id="init-screen">
         <div class="init-container">
@@ -60,7 +70,7 @@
                     <a href="https://3body.aster1379.xin" class="keyword-link">42</a>
                     <a href="https://about-me.aster1379.xin" class="keyword-link">水滴</a>
                     <a href="https://virus.aster1379.xin" class="keyword-link">归零者</a>
-                    <a href="https://guide.aster1379.xin" class="keyword-link">递归</a>
+                    <a href="?recursive=true" class="keyword-link" id="recursive-link">递归</a>
 					<a href="https://secret.aster1379.xin" class="keyword-link">黑暗森林</a>
                 </div>
             </div>
@@ -73,5 +83,4 @@
     
     <script src="script.js"></script>
 </body>
-
 </html>
