@@ -1,3 +1,61 @@
+// 检查是否通过递归链接访问
+function isRecursiveAccess() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('recursive') === 'true';
+}
+
+// 检查用户是否已经访问过
+function hasVisitedBefore() {
+    return localStorage.getItem('hasVisited') === 'true';
+}
+
+// 标记用户已访问
+function markAsVisited() {
+    localStorage.setItem('hasVisited', 'true');
+}
+
+// 显示递归提示
+function showRecursiveMessage() {
+    const modal = document.getElementById('recursive-modal');
+    modal.style.display = 'flex';
+    
+    document.getElementById('modal-confirm').addEventListener('click', function() {
+        modal.style.display = 'none';
+        // 清除URL参数
+        window.history.replaceState({}, document.title, window.location.pathname);
+        // 重置访问状态，使启动过程重新开始
+        localStorage.removeItem('hasVisited');
+        // 重新加载页面
+        window.location.reload();
+    });
+}
+
+// 初始化页面显示
+function initPageDisplay() {
+    const initScreen = document.getElementById('init-screen');
+    const mainContainer = document.getElementById('main-container');
+    
+    // 检查是否通过递归链接访问
+    if (isRecursiveAccess()) {
+        // 显示递归提示
+        showRecursiveMessage();
+        return;
+    }
+    
+    if (hasVisitedBefore()) {
+        // 用户已经访问过，直接显示主引导界面
+        initScreen.style.display = 'none';
+        mainContainer.style.display = 'flex';
+        startGhostCountdown();
+        startFloatingQuotes();
+    } else {
+        // 用户第一次访问，显示启动画面
+        initScreen.style.display = 'flex';
+        mainContainer.style.display = 'none';
+        displayNextLog();
+    }
+}
+
 // 550W启动日志
 const initLogs = [
     {text: "> 启动量子计算核心...", delay: 500},
@@ -64,6 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let progress = 0;
     let currentLog = 0;
     
+    // 初始化页面显示
+    initPageDisplay();
+    
     // 创建粒子背景
     createParticles();
     
@@ -105,15 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     initScreen.style.display = 'none';
                     mainContainer.style.opacity = '1';
                     mainContainer.style.transform = 'translateY(0)';
+                    markAsVisited(); // 标记用户已访问
                     startGhostCountdown();
                     startFloatingQuotes();
                 }, 1500);
             }, 1000);
         }
     }
-    
-    // 开始显示日志
-    displayNextLog();
     
     // 创建粒子背景
     function createParticles() {
@@ -178,6 +237,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalSeconds = 1200 * 3600;
         let remainingSeconds = totalSeconds;
         
+        // 尝试从本地存储加载剩余时间
+        const savedTime = localStorage.getItem('countdownTime');
+        if (savedTime) {
+            remainingSeconds = parseInt(savedTime);
+        }
+        
         // 每秒更新一次倒计时
         const countdownInterval = setInterval(() => {
             // 更新剩余时间
@@ -196,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // 更新显示
             ghostTimer.textContent = timerText;
+            
+            // 保存剩余时间到本地存储
+            localStorage.setItem('countdownTime', remainingSeconds.toString());
             
             // 最后10小时添加闪烁效果
             if (remainingSeconds < 36000) {
