@@ -606,6 +606,7 @@
         let ghostTimer, skipBtn, floatingTexts;
         let progress = 0;
         let currentLog = 0;
+        let countdownInterval = null;
 
         // 550W启动日志
         const initLogs = [
@@ -643,10 +644,9 @@
             "主不在乎",
             "前进！前进！不择手段地前进！",
             "毁灭你，与你有何相干？",
-            "给我一块二向箔，清理用",
+            "我看到了我的爱恋，我飞到她的身边",
             "弱小和无知不是生存的障碍，傲慢才是",
             "宇宙就是一座黑暗森林",
-            "傻孩子们，快跑啊！",
             "生命、宇宙和一切问题的终极答案是42",
             "当人类真正流落太空时，极权只需五分钟",
             "递归是理解递归的关键",
@@ -803,23 +803,23 @@
             const savedTime = localStorage.getItem('countdownTime');
             if (savedTime) {
                 remainingSeconds = parseInt(savedTime);
+                // 如果剩余时间小于等于0，重置为初始值
+                if (remainingSeconds <= 0) {
+                    remainingSeconds = totalSeconds;
+                }
             }
             
-            // 每秒更新一次倒计时
-            const countdownInterval = setInterval(() => {
-                // 更新剩余时间
-                remainingSeconds = Math.max(0, remainingSeconds - 1);
-                
-                // 转换为小时、分钟、秒
-                let hours = Math.floor(remainingSeconds / 3600);
-                let minutes = Math.floor((remainingSeconds % 3600) / 60);
-                let seconds = Math.floor(remainingSeconds % 60);
+            // 更新倒计时显示
+            function updateCountdownDisplay() {
+                const hours = Math.floor(remainingSeconds / 3600);
+                const minutes = Math.floor((remainingSeconds % 3600) / 60);
+                const seconds = remainingSeconds % 60;
                 
                 // 格式化为HHHH:MM:SS
                 const formattedHours = hours.toString().padStart(4, '0');
                 const formattedMinutes = minutes.toString().padStart(2, '0');
                 const formattedSeconds = seconds.toString().padStart(2, '0');
-                const timerText = `${formattedHours}:${formattedMinutes}:${formformedSeconds}`;
+                const timerText = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
                 
                 // 更新显示
                 ghostTimer.textContent = timerText;
@@ -853,10 +853,17 @@
                         }, 2000);
                     }, 1000);
                 }
-            }, 1000);
+            }
             
-            // 保存interval ID以便清除
-            window.countdownInterval = countdownInterval;
+            // 初始更新显示
+            updateCountdownDisplay();
+            
+            // 每秒更新一次倒计时
+            countdownInterval = setInterval(() => {
+                // 更新剩余时间
+                remainingSeconds = Math.max(0, remainingSeconds - 1);
+                updateCountdownDisplay();
+            }, 1000);
         }
 
         // 初始化页面显示
@@ -904,11 +911,12 @@
             // 跳过按钮事件
             skipBtn.addEventListener('click', () => {
                 // 清除倒计时
-                clearInterval(window.countdownInterval);
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
                 window.location.href = "site1.html";
             });
         });
     </script>
 </body>
 </html>
-
